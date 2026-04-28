@@ -103,8 +103,8 @@ A fully configured Postman collection has been mapped out for your convenience t
 - `GET /my-content` - View personal upload history and statuses.
 
 ### Principal Dashboard (`/api/content`) _(Needs Principal JWT)_
-- `GET /pending` - Review all queued content needing approval.
 - `GET /all` - View everything ever uploaded natively.
+- `GET /pending` - Review all queued content needing approval.
 - `PUT /:id/approve` - Approve content to enter the live rotation.
 - `PUT /:id/reject` - Reject content (Requires JSON: `{ "rejection_reason": "Too blurry" }`).
 
@@ -121,6 +121,5 @@ A fully configured Postman collection has been mapped out for your convenience t
 - **✅ Subject Filtering:** The public broadcast endpoint actively supports query-based filtering to isolate specific subjects (e.g., `?subject=Maths`).
 
 **Evaluation Links:**
-- **Demo Video:** [Insert Link Here](#)
-- **API Documentation (Postman/Swagger):** [Insert Link Here](#)
-- **Deployment Link:** [Insert Link Here](#)
+- **API Documentation (Postman/Swagger):** [https://go.postman.co/collection/47054873-041a5899-5f04-4d94-8975-cf6224608716?source=collection_link](#)
+- **Deployment Link:** [https://edubroadcast-api.onrender.com](#)
