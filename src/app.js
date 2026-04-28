@@ -23,4 +23,20 @@ app.use('/api/auth', authRoutes);
 app.use('/api/content', contentRoutes);
 app.use('/content/live', broadcastRoutes);
 
+// Starter API friendly landing message
+app.get('/', (req, res) => {
+  res.status(200).json({
+    message: "Welcome to the 📡 EduBroadcast API",
+    status: "Live & Broadcasting",
+    version: "1.0.0",
+    description: "A secure, subject-based Content Broadcasting System allowing Teachers to schedule educational content.",
+    documentation: "Please refer to the enclosed README.md and Postman Collection in the /docs folder for full endpoint routing.",
+    endpoints: {
+      auth: "/api/auth",
+      content: "/api/content",
+      broadcast: "/content/live/:teacherId"
+    }
+  });
+});
+
 module.exports = app;
