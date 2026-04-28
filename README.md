@@ -121,5 +121,5 @@ A fully configured Postman collection has been mapped out for your convenience t
 - **✅ Subject Filtering:** The public broadcast endpoint actively supports query-based filtering to isolate specific subjects (e.g., `?subject=Maths`).
 
 **Evaluation Links:**
-- **API Documentation (Postman/Swagger):** [https://go.postman.co/collection/47054873-041a5899-5f04-4d94-8975-cf6224608716?source=collection_link](#)
-- **Deployment Link:** [https://edubroadcast-api.onrender.com](#)
+- **API Documentation (Postman/Swagger):** [`postman.collection-link`](https://go.postman.co/collection/47054873-041a5899-5f04-4d94-8975-cf6224608716?source=collection_link)
+- **Deployment Link:** [`https://edubroadcast-api.onrender.com`](https://edubroadcast-api.onrender.com)
