@@ -1,0 +1,459 @@
+{
+  "info": {
+    "_postman_id": "041a5899-5f04-4d94-8975-cf6224608716",
+    "name": "EduBroadcast API",
+    "description": "**Description:**  \nThis collection provides a comprehensive set of endpoints for the **EduBroadcast Platform,** a specialized MERN-stack application designed for synchronized educational content delivery.\n\nThe system is built on a high-performance architecture that replaces traditional server-side timers with a mathematical **Modulo Rotation Engine**, ensuring perfectly synchronized live broadcasts across all clients.\n\n---\n\n### **🛠 Core Modules**\n\n- **Identity & Access Management:** Secure registration and `HttpOnly` cookie-based JWT authentication.\n    \n- **Teacher Workflow:** Robust media uploading with strict 10MB size limits and subject-based scheduling.\n    \n- **Principal Governance:** Administrative oversight with a full pending-queue approval/rejection system.\n    \n- **Live Broadcast Engine:** A public-facing, stateless API that calculates real-time playback positions across subjects.\n    \n\n---\n\n### **🚀 Getting Started**\n\n1. **Environment Setup:** Ensure you have the `EduBroadcast Local` (or `Production`) environment selected in the top-right corner.\n    \n2. **Variable Injection:** This collection uses `{{baseUrl}}` for all requests. By default, this is set to `http://localhost:3000`.\n    \n3. **Authentication Flow:** - Start by registering a user or logging in with existing credentials (`t1@gmail.com` or `p1@gmail.com`).\n    \n    - Postman will automatically handle the session cookies—no manual token pasting is required.\n        \n4. **Testing Uploads:** Use the `upload content` request to test the **Multer Firewall**. Try a file over 10MB to see the error-handling in action.\n    \n\n---\n\n### **⚖️ Status Codes**\n\n- `200 OK` / `201 Created`: Request successful.\n    \n- `400 Bad Request`: Validation error (e.g., File too large, missing fields).\n    \n- `401 Unauthorized`: Missing or invalid session cookie.\n    \n- `403 Forbidden`: Role mismatch (e.g., a Teacher trying to access Principal endpoints).\n    \n- `500 Internal Server Error`: Unexpected server-side failure.\n    \n\n---\n\n**Developed by:** Ashutosh Raj",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "47054873",
+    "_collection_link": "https://go.postman.co/collection/47054873-041a5899-5f04-4d94-8975-cf6224608716?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "Login user",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"email\": \"p1@gmail.com\",\r\n    \"password\": \"123456\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/auth/login",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "auth",
+                "login"
+              ]
+            },
+            "description": "Authenticates a user and initiates a secure session.\n\nThis endpoint serves as the single login gate for both **Teachers** and **Principals**. Role checking is handled automatically by the backend.\n\n### Authentication Mechanism\n\nUpon successful login, the server issues a cookie containing the JSON Web Token (JWT).\n\n- **Note for Testing:** Postman will automatically capture this cookie and attach it to all subsequent requests to this domain.\n    \n\n### Required Body Parameters:\n\n- `email`: The registered email address.\n    \n- `password`: The user's password."
+          },
+          "response": [
+            {
+              "name": "success: teacher login",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"email\": \"t1@gmail.com\",\r\n    \"password\": \"123456\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://localhost:3000/api/auth/login",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "3000",
+                  "path": [
+                    "api",
+                    "auth",
+                    "login"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "X-Powered-By",
+                  "value": "Express"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                },
+                {
+                  "key": "Set-Cookie",
+                  "value": "token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwicm9sZSI6InRlYWNoZXIiLCJlbWFpbCI6InQxQGdtYWlsLmNvbSIsImlhdCI6MTc3NzMzMDYwMSwiZXhwIjoxNzc3OTM1NDAxfQ.6my9CQ0RCChRjvCNTyDD_3y2yAZJx5pW-g9RPu5Hdgg; Path=/"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "98"
+                },
+                {
+                  "key": "ETag",
+                  "value": "W/\"62-HeTPnsRnHgJFqKbENEdsJkwron8\""
+                },
+                {
+                  "key": "Date",
+                  "value": "Mon, 27 Apr 2026 22:56:41 GMT"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=5"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"message\": \"Login successful\",\n    \"user\": {\n        \"id\": 1,\n        \"name\": \"t1\",\n        \"email\": \"t1@gmail.com\",\n        \"role\": \"teacher\"\n    }\n}"
+            },
+            {
+              "name": "success: principal login",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"email\": \"p1@gmail.com\",\r\n    \"password\": \"123456\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://localhost:3000/api/auth/login",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "3000",
+                  "path": [
+                    "api",
+                    "auth",
+                    "login"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "X-Powered-By",
+                  "value": "Express"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                },
+                {
+                  "key": "Set-Cookie",
+                  "value": "token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwicm9sZSI6InByaW5jaXBhbCIsImVtYWlsIjoicDFAZ21haWwuY29tIiwiaWF0IjoxNzc3MzMwODIzLCJleHAiOjE3Nzc5MzU2MjN9.CwlRNk4CdxrjEDV6Wh54A6xX65pD0B8O4GO0R2LGiLU; Path=/"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "100"
+                },
+                {
+                  "key": "ETag",
+                  "value": "W/\"64-KQGcZqrlLf2ZJ/Q7/GRQDwPuHts\""
+                },
+                {
+                  "key": "Date",
+                  "value": "Mon, 27 Apr 2026 23:00:23 GMT"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=5"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"message\": \"Login successful\",\n    \"user\": {\n        \"id\": 4,\n        \"name\": \"p1\",\n        \"email\": \"p1@gmail.com\",\n        \"role\": \"principal\"\n    }\n}"
+            }
+          ]
+        },
+        {
+          "name": "Register user",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"name\": \"t5\",\r\n    \"email\": \"t5@gmail.com\",\r\n    \"password\": \"123456\",\r\n    \"role\": \"teacher\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/auth/register",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "auth",
+                "register"
+              ]
+            },
+            "description": "Registers a new user in the system.\n\n- **Allowed Roles:** `teacher`, `principal`"
+          },
+          "response": []
+        }
+      ],
+      "description": "### User Authentication Module\n\nHandles user registration and session management.\n\n- **Security:** Uses cookies to store JWT tokens.\n    \n- **Note:** Successful login is required to access Teacher and Principal operations."
+    },
+    {
+      "name": "Teacher",
+      "item": [
+        {
+          "name": "Upload content",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "title",
+                  "value": "Physics",
+                  "type": "text",
+                  "uuid": "e28cd1d4-0f91-4fc8-8898-d8eb1bc633cb"
+                },
+                {
+                  "key": "description",
+                  "value": "Memorize these",
+                  "type": "text",
+                  "uuid": "646a3b39-3040-4d2d-ac60-568172e73bbe"
+                },
+                {
+                  "key": "subject",
+                  "value": "Science",
+                  "type": "text",
+                  "uuid": "506a9936-421a-46df-affa-36e3bea0f1a6"
+                },
+                {
+                  "key": "start_time",
+                  "value": "2026-04-28 01:00:00",
+                  "type": "text",
+                  "uuid": "bcbbfd96-95d7-44a8-bb26-d071889be3c4"
+                },
+                {
+                  "key": "end_time",
+                  "value": "2026-04-28 06:00:00",
+                  "type": "text",
+                  "uuid": "4846ccef-5304-4410-a5a6-3d893019c87b"
+                },
+                {
+                  "key": "duration",
+                  "value": "10",
+                  "type": "text",
+                  "uuid": "507c60f9-c620-443b-91a6-f38895062457"
+                },
+                {
+                  "key": "file",
+                  "type": "file",
+                  "uuid": "b337d4fb-f6ea-4764-a6d1-0253e8065c62",
+                  "src": "/C:/Users/Ashutosh Raj/Downloads/alzebra.jpg"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/content/upload",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "content",
+                "upload"
+              ]
+            },
+            "description": "**Role Required:** `Teacher`\n\nUploads a new media file and schedules it for the live broadcast engine.\n\n### Constraints:\n\n- **File limit:** 10MB maximum.\n    \n- **Allowed types:** JPG, PNG, GIF, MP4.\n    \n- **Duration:** Must be an integer representing minutes.\n    \n\n**Note:** Ensure your `start_time` and `end_time` are formatted strictly as `YYYY-MM-DD HH:MM:SS` (Asia/Kolkata timezone)."
+          },
+          "response": []
+        },
+        {
+          "name": "Get my contents",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "formdata",
+              "formdata": []
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/content/my-content",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "content",
+                "my-content"
+              ]
+            },
+            "description": "**Role Required:** `Teacher`\n\n  \nFetches a history of all content uploaded by the currently authenticated teacher, including its current approval status and any rejection reasons."
+          },
+          "response": []
+        }
+      ],
+      "description": "### Teacher Content Management\n\nEndpoints for teachers to manage their educational materials.\n\n- **Functionality:** Uploading media, setting subject tags, and defining broadcast schedules.\n    \n- **Access:** Restricted to users with the `teacher` role."
+    },
+    {
+      "name": "Principal",
+      "item": [
+        {
+          "name": "View all content",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "formdata",
+              "formdata": []
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/content/all",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "content",
+                "all"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Approve content",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "formdata",
+              "formdata": []
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/content/:contentId/approve",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "content",
+                ":contentId",
+                "approve"
+              ],
+              "variable": [
+                {
+                  "key": "contentId",
+                  "value": "60001"
+                }
+              ]
+            },
+            "description": "**Role Required:** `Principal`\n\n  \nApproves a specific piece of pending content, making it immediately eligible for the Live Broadcast engine."
+          },
+          "response": []
+        },
+        {
+          "name": "Reject content",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"rejection_reason\": \"content quality can be better\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/content/:contentId/reject",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "content",
+                ":contentId",
+                "reject"
+              ],
+              "variable": [
+                {
+                  "key": "contentId",
+                  "value": "30001"
+                }
+              ]
+            },
+            "description": "**Role Required:** `Principal`  \nRejects a pending piece of content.\n\n- **Required Body:** You must provide a `rejection_reason` explaining why the file was denied."
+          },
+          "response": []
+        }
+      ],
+      "description": "### Administrative Review Module\n\nThe control center for system administrators.\n\n- **Functionality:** Allows Principals to monitor all system content, approve high-quality materials for the live stream, or reject unsuitable content with feedback.\n    \n- **Access:** Restricted to users with the `principal` role."
+    },
+    {
+      "name": "Live broadcast",
+      "item": [
+        {
+          "name": "Get live content",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": ""
+            },
+            "url": {
+              "raw": "{{baseUrl}}/content/live/:teacherId",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "content",
+                "live",
+                ":teacherId"
+              ],
+              "variable": [
+                {
+                  "key": "teacherId",
+                  "value": "1"
+                }
+              ]
+            },
+            "description": "**Role Required:** `Public` (No Auth Needed)  \nThe core mathematically synchronized broadcast engine. Calculates the exact media file playing right now based on the schedule's anchor time.\n\n- **Optional Query:** `?subject=Science` to filter the live broadcast stream to a specific subject."
+          },
+          "response": []
+        }
+      ],
+      "description": "### Synchronized Streaming Engine\n\nPublic-facing endpoints for students and observers.\n\n- **Logic:** Uses a mathematical modulo rotation engine to synchronize video playback across all clients without the need for high-latency background tasks.\n    \n- **Access:** Public (No authentication required)."
+    }
+  ]
+}
